@@ -37,6 +37,7 @@ export default function Home() {
     <div className="adpage-container">
       <Head>
         <title>{ad.title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
@@ -44,7 +45,10 @@ export default function Home() {
         />
       </Head>
 
-      <img src={ad.image} alt="Ad Banner" className="adpage-banner" draggable={false} />
+      {/* 🔹 Banner bisa diklik */}
+      <a href={ad.link} target="_blank" rel="nofollow noopener noreferrer">
+        <img src={ad.image} alt="Ad Banner" className="adpage-banner" draggable={false} />
+      </a>
 
       <div className="adpage-content">
         <h1 className="adpage-title">{ad.title}</h1>
@@ -77,6 +81,7 @@ export default function Home() {
           height: auto;
           object-fit: cover;
           pointer-events: none;
+          display: block;
         }
 
         .adpage-content {
@@ -109,7 +114,7 @@ export default function Home() {
           text-decoration: none;
           padding: 14px 35px;
           font-size: 16px;
-          border-radius: 6px; /* 🔹 border-radius ditambah */
+          border-radius: 6px;
           transition: 0.3s ease;
         }
 
