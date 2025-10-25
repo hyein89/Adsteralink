@@ -58,7 +58,7 @@ const styles = {
     width: "100%",
     height: "auto",
     objectFit: "cover" as const,
-    pointerEvents: "none",
+    pointerEvents: "none" as const, // ✅ fix ini
   },
   content: {
     padding: "20px",
