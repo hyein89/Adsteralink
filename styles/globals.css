@@ -1,32 +1,41 @@
-/* ===== Global Styles ===== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
 html, body, #__next {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #0d0d0d;
-}
-
-body {
-  color: #fff;
+  background: #0a0a0a;
+  color: #f0f0f0;
   font-family: 'Inter', sans-serif;
 }
 
-/* Animasi halus untuk elemen */
-@keyframes fadeIn {
-  from {
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Styling tombol global */
-button, a {
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
