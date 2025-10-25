@@ -5,10 +5,10 @@ export default function HomePage() {
   return (
     <>
       <Head>
-        <title>Join Adsterra Referral</title>
+        <title>Join Adsterra Referral Program</title>
         <meta
           name="description"
-          content="Join Adsterra referral program and start earning today."
+          content="Join Adsterra referral program and start earning with your traffic today."
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
@@ -16,93 +16,93 @@ export default function HomePage() {
         />
       </Head>
 
-      <div style={styles.container}>
+      <div style={page.container}>
         {/* Banner */}
-        <div style={styles.banner}>
+        <div style={page.banner}>
           <a
             href="https://beta.publishers.adsterra.com/referral/CppfnZn94G"
             rel="nofollow"
             target="_blank"
           >
             <img
-              alt="Adsterra Banner"
               src="https://landings-cdn.adsterratech.com/referralBanners/gif/600x250_adsterra_reff.gif"
-              style={styles.image}
+              alt="Adsterra Referral Banner"
+              style={page.image}
             />
           </a>
         </div>
 
-        {/* Title / Short Text */}
-        <div style={styles.content}>
-          <h1 style={styles.title}>Earn Money with Adsterra</h1>
-          <p style={styles.subtitle}>
-            Start earning by sharing your Adsterra referral link today.
+        {/* Content */}
+        <div style={page.content}>
+          <h1 style={page.title}>Top iGaming Ad Network</h1>
+          <p style={page.desc}>
+            The best for advertisers. 248 GEOs. All payment models: CPM, CPC, CPA.
+            SSP/managed.
           </p>
-        </div>
 
-        {/* Floating Button */}
-        <a
-          href="https://beta.publishers.adsterra.com/referral/CppfnZn94G"
-          rel="nofollow"
-          target="_blank"
-          style={styles.button}
-        >
-          Join Now
-        </a>
+          <a
+            href="https://beta.publishers.adsterra.com/referral/CppfnZn94G"
+            rel="nofollow"
+            target="_blank"
+            style={page.button}
+          >
+            Sign Up
+          </a>
+        </div>
       </div>
     </>
   );
 }
 
-const styles = {
+const page = {
   container: {
     fontFamily: "'Poppins', sans-serif",
     margin: 0,
     padding: 0,
+    minHeight: "100vh",
     backgroundColor: "#ffffff",
     color: "#000000",
-    minHeight: "100vh",
-    overflowX: "hidden" as const,
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center",
+    overflowX: "hidden" as const,
   },
   banner: {
     width: "100%",
-    height: "60vh",
-    overflow: "hidden" as const,
+    height: "auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden" as const,
   },
   image: {
     width: "100%",
-    height: "100%",
+    height: "auto",
     objectFit: "cover" as const,
   },
   content: {
+    maxWidth: "600px",
     textAlign: "center" as const,
     padding: "40px 20px",
   },
   title: {
-    fontSize: "2rem",
+    fontSize: "1.8rem",
     fontWeight: 600,
     marginBottom: "10px",
   },
-  subtitle: {
+  desc: {
     fontSize: "1rem",
-    fontWeight: 400,
+    lineHeight: "1.5",
+    marginBottom: "30px",
   },
   button: {
-    position: "fixed" as const,
-    bottom: "20px",
-    right: "20px",
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    padding: "14px 26px",
+    display: "inline-block",
+    backgroundColor: "#0056f5",
+    color: "#fff",
+    padding: "14px 40px",
     textDecoration: "none",
     fontWeight: 600,
     fontSize: "1rem",
-    zIndex: 9999,
+    letterSpacing: "0.5px",
   },
 };
