@@ -1,108 +1,89 @@
-import React from "react";
-import Head from "next/head";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function HomePage() {
+  const [ads, setAds] = useState<any>(null);
+  const router = useRouter();
+
+  // Redirect ke 404 kalau buka di desktop
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth > 768) {
+        router.replace("/404");
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    fetch("/ads.json")
+      .then((res) => res.json())
+      .then(setAds)
+      .catch((err) => console.error("Error loading ads.json:", err));
+  }, []);
+
+  if (!ads) return null;
+
   return (
-    <>
-      <Head>
-        <title>Join Adsterra Referral Program</title>
-        <meta
-          name="description"
-          content="Join Adsterra referral program and start earning with your traffic today."
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
-      <div style={page.container}>
-        {/* Banner */}
-        <div style={page.banner}>
-          <a
-            href="https://beta.publishers.adsterra.com/referral/CppfnZn94G"
-            rel="nofollow"
-            target="_blank"
-          >
-            <img
-              src="https://landings-cdn.adsterratech.com/referralBanners/gif/600x250_adsterra_reff.gif"
-              alt="Adsterra Referral Banner"
-              style={page.image}
-            />
-          </a>
-        </div>
-
-        {/* Content */}
-        <div style={page.content}>
-          <h1 style={page.title}>Top iGaming Ad Network</h1>
-          <p style={page.desc}>
-            The best for advertisers. 248 GEOs. All payment models: CPM, CPC, CPA.
-            SSP/managed.
-          </p>
-
-          <a
-            href="https://beta.publishers.adsterra.com/referral/CppfnZn94G"
-            rel="nofollow"
-            target="_blank"
-            style={page.button}
-          >
-            Sign Up
-          </a>
-        </div>
+    <div style={styles.container}>
+      <img
+        src={ads.image}
+        alt="Ad Banner"
+        style={styles.banner}
+        draggable={false}
+      />
+      <div style={styles.content}>
+        <h1 style={styles.title}>{ads.title}</h1>
       </div>
-    </>
+      <a href={ads.buttonLink} target="_blank" rel="nofollow noopener noreferrer">
+        <button style={styles.button}>{ads.buttonText}</button>
+      </a>
+    </div>
   );
 }
 
-const page = {
+const styles = {
   container: {
     fontFamily: "'Poppins', sans-serif",
-    margin: 0,
-    padding: 0,
+    textAlign: "left" as const,
     minHeight: "100vh",
-    backgroundColor: "#ffffff",
-    color: "#000000",
     display: "flex",
     flexDirection: "column" as const,
+    justifyContent: "flex-start",
     alignItems: "center",
-    overflowX: "hidden" as const,
+    backgroundColor: "#fff",
+    position: "relative" as const,
+    overflow: "hidden",
   },
   banner: {
     width: "100%",
     height: "auto",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden" as const,
-  },
-  image: {
-    width: "100%",
-    height: "auto",
     objectFit: "cover" as const,
+    pointerEvents: "none",
   },
   content: {
-    maxWidth: "600px",
-    textAlign: "center" as const,
-    padding: "40px 20px",
+    padding: "20px",
+    width: "100%",
+    boxSizing: "border-box" as const,
   },
   title: {
-    fontSize: "1.8rem",
+    fontSize: "20px",
     fontWeight: 600,
-    marginBottom: "10px",
-  },
-  desc: {
-    fontSize: "1rem",
-    lineHeight: "1.5",
-    marginBottom: "30px",
+    lineHeight: "1.4",
+    marginTop: "15px",
   },
   button: {
-    display: "inline-block",
-    backgroundColor: "#0056f5",
+    position: "fixed" as const,
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    backgroundColor: "#ff4747",
     color: "#fff",
-    padding: "14px 40px",
-    textDecoration: "none",
+    border: "none",
+    padding: "14px 28px",
+    fontSize: "16px",
     fontWeight: 600,
-    fontSize: "1rem",
-    letterSpacing: "0.5px",
+    cursor: "pointer",
+    transition: "0.3s",
+    fontFamily: "'Poppins', sans-serif",
   },
 };
