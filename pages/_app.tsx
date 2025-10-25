@@ -1,6 +1,38 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import Script from 'next/script'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        {/* Favicon untuk semua halaman */}
+        <link rel="icon" href="/5988576.png" />
+      </Head>
+
+      {/* Kode Histats Global */}
+      <Script
+        id="histats"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            var _Hasync= _Hasync|| [];
+            _Hasync.push(['Histats.start', '1,4828760,4,0,0,0,00010000']);
+            _Hasync.push(['Histats.fasi', '1']);
+            _Hasync.push(['Histats.track_hits', '']);
+            (function() {
+              var hs = document.createElement('script');
+              hs.type = 'text/javascript';
+              hs.async = true;
+              hs.src = ('//s10.histats.com/js15_as.js');
+              (document.getElementsByTagName('head')[0] || document.body).appendChild(hs);
+            })();
+          `,
+        }}
+      />
+
+      <Component {...pageProps} />
+    </>
+  )
 }
