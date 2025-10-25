@@ -1,14 +1,14 @@
 [
   {
     "id": "abc123",
-    "title": "Dapatkan Penghasilan Pasif dari Iklan Situsmu!",
-    "url_img": "https://example.com/banner1.jpg",
-    "linkoffer": "https://adsterralink.com/offer"
+    "title": "Win Free Rewards Today!",
+    "image": "https://example.com/banner.jpg",
+    "key": "c62a925a76460616caf39679e0e121a9"
   },
   {
-    "id": "xyz789",
-    "title": "Coba Shortlink Penghasil Uang Sekarang!",
-    "url_img": "https://example.com/banner2.jpg",
-    "linkoffer": "https://short.example.com"
+    "id": "xyz987",
+    "title": "Claim Your Offer Now!",
+    "image": "https://example.com/offer.png",
+    "key": "c62a925a76460616caf39679e0e121a9"
   }
 ]
