@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface AdData {
   image: string;
@@ -10,7 +12,18 @@ interface AdData {
 
 export default function Home() {
   const [ad, setAd] = useState<AdData | null>(null);
+  const router = useRouter();
 
+  // 🔹 Redirect ke 404 kalau dibuka di desktop
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth > 768) {
+        router.replace("/404");
+      }
+    }
+  }, [router]);
+
+  // 🔹 Ambil data dari ads.json
   useEffect(() => {
     fetch("/ads.json")
       .then((res) => res.json())
@@ -22,11 +35,26 @@ export default function Home() {
 
   return (
     <div className="adpage-container">
+      <Head>
+        <title>{ad.title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+
       <img src={ad.image} alt="Ad Banner" className="adpage-banner" draggable={false} />
+
       <div className="adpage-content">
         <h1 className="adpage-title">{ad.title}</h1>
         <p className="adpage-desc">{ad.description}</p>
-        <a href={ad.link} target="_blank" rel="nofollow noopener noreferrer" className="adpage-btn">
+        <a
+          href={ad.link}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className="adpage-btn"
+        >
           {ad.button}
         </a>
       </div>
@@ -40,7 +68,7 @@ export default function Home() {
           justify-content: flex-start;
           text-align: left;
           min-height: 100vh;
-          background: #fff;
+          background: #ffffff;
           overflow-x: hidden;
         }
 
@@ -74,21 +102,22 @@ export default function Home() {
 
         .adpage-btn {
           display: inline-block;
-          background-color: #0056f4;
+          background-color: #0066ff;
           color: #fff;
           font-weight: 600;
           text-align: center;
           text-decoration: none;
           padding: 14px 35px;
           font-size: 16px;
+          border-radius: 6px; /* 🔹 border-radius ditambah */
           transition: 0.3s ease;
         }
 
         .adpage-btn:hover {
-          background-color: #0042c3;
+          background-color: #004ecb;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
           .adpage-title {
             font-size: 20px;
           }
@@ -97,7 +126,6 @@ export default function Home() {
           }
           .adpage-btn {
             width: 100%;
-            text-align: center;
             padding: 12px;
           }
         }
