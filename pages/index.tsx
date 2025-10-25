@@ -1,89 +1,95 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function HomePage() {
-  const [ads, setAds] = useState<any>(null);
+interface AdData {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
+export default function Home() {
+  const [ad, setAd] = useState<AdData | null>(null);
   const router = useRouter();
 
-  // Redirect ke 404 kalau buka di desktop
   useEffect(() => {
+    // Redirect ke 404 jika di desktop
     if (typeof window !== "undefined") {
       if (window.innerWidth > 768) {
         router.replace("/404");
       }
     }
-  }, [router]);
 
-  useEffect(() => {
+    // Ambil data dari ads.json
     fetch("/ads.json")
       .then((res) => res.json())
-      .then(setAds)
-      .catch((err) => console.error("Error loading ads.json:", err));
-  }, []);
+      .then((data) => setAd(data))
+      .catch((err) => console.error("Failed to load ad data:", err));
+  }, [router]);
 
-  if (!ads) return null;
+  if (!ad) return null;
 
   return (
-    <div style={styles.container}>
-      <img
-        src={ads.image}
-        alt="Ad Banner"
-        style={styles.banner}
-        draggable={false}
-      />
-      <div style={styles.content}>
-        <h1 style={styles.title}>{ads.title}</h1>
+    <div style={pageStyles.container}>
+      <img src={ad.image} alt="Ad Banner" style={pageStyles.banner} draggable={false} />
+      <div style={pageStyles.textContainer}>
+        <h1 style={pageStyles.title}>{ad.title}</h1>
+        <p style={pageStyles.desc}>{ad.description}</p>
       </div>
-      <a href={ads.buttonLink} target="_blank" rel="nofollow noopener noreferrer">
-        <button style={styles.button}>{ads.buttonText}</button>
+      <a href={ad.link} target="_blank" rel="nofollow noopener noreferrer" style={pageStyles.button}>
+        Sign Up
       </a>
     </div>
   );
 }
 
-const styles = {
+const pageStyles = {
   container: {
     fontFamily: "'Poppins', sans-serif",
     textAlign: "left" as const,
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column" as const,
-    justifyContent: "flex-start",
-    alignItems: "center",
     backgroundColor: "#fff",
-    position: "relative" as const,
     overflow: "hidden",
+    position: "relative" as const,
   },
   banner: {
     width: "100%",
     height: "auto",
     objectFit: "cover" as const,
-    pointerEvents: "none" as const, // ✅ fix ini
+    pointerEvents: "none" as const,
+    display: "block",
   },
-  content: {
+  textContainer: {
     padding: "20px",
-    width: "100%",
-    boxSizing: "border-box" as const,
   },
   title: {
-    fontSize: "20px",
-    fontWeight: 600,
-    lineHeight: "1.4",
-    marginTop: "15px",
+    fontSize: "22px",
+    fontWeight: 700,
+    marginBottom: "8px",
+    color: "#111",
+  },
+  desc: {
+    fontSize: "15px",
+    lineHeight: "1.5",
+    color: "#444",
+    margin: 0,
   },
   button: {
     position: "fixed" as const,
-    bottom: "20px",
+    bottom: "25px",
     left: "50%",
     transform: "translateX(-50%)",
-    backgroundColor: "#ff4747",
+    backgroundColor: "#0056f4",
     color: "#fff",
     border: "none",
-    padding: "14px 28px",
+    padding: "14px 35px",
     fontSize: "16px",
     fontWeight: 600,
+    textDecoration: "none",
     cursor: "pointer",
-    transition: "0.3s",
     fontFamily: "'Poppins', sans-serif",
+    transition: "0.3s",
   },
 };
