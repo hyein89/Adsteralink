@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Custom404() {
-  const [dots, setDots] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length < 3 ? prev + "." : ""));
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div style={styles.container}>
       <h1 style={styles.code}>404</h1>
-      <p style={styles.text}>Oops! Page not found{dots}</p>
-      <a href="/" style={styles.button}>Go Back Home</a>
+      <p style={styles.text}>Page not found.</p>
+      <Link href="/" style={styles.button}>
+        Back home
+      </Link>
     </div>
   );
 }
@@ -22,6 +15,7 @@ export default function Custom404() {
 const styles = {
   container: {
     minHeight: "100vh",
+    width: "100%",
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center",
