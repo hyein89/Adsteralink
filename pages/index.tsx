@@ -1,15 +1,8 @@
 export default function Home() {
   return (
-    <main
-      style={{
-        textAlign: "center",
-        padding: "50px",
-        fontFamily: "sans-serif",
-      }}
-    >
-      <h1>Selamat Datang 👋</h1>
-      <p>Gunakan URL seperti <code>/abc123</code> untuk redirect otomatis.</p>
-      <p>Preview link juga akan muncul di Facebook dan WhatsApp.</p>
-    </main>
+    <div style={{ textAlign: "center", paddingTop: "100px", fontFamily: "Poppins, sans-serif" }}>
+      <h1>Redirect System Active</h1>
+      <p>Try visiting <code>/abc123</code> or <code>/xyz987</code></p>
+    </div>
   );
 }
