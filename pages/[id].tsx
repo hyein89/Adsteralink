@@ -88,7 +88,46 @@ const styles = {
     display: "flex",
     flexDirection: "column" as const,
     justifyContent: "center",
+    alignItems: "center",
     minHeight: "100vh",
+    fontFamily: "'LXGW Marker Gothic', 'Poppins', sans-serif",
+    fontWeight: 400,
+    backgroundColor: "#ffffff",
+    color: "#000000",
+    padding: "0 20px",
+    boxSizing: "border-box" as const,
+  },
+  content: {
+    maxWidth: "600px",
+    width: "100%",
+  },
+  h1: {
+    fontSize: "2rem",
+    margin: "10px 0",
+    lineHeight: 1.2,
+  },
+  h2: {
+    fontSize: "2.5rem",
+    margin: "5px 0",
+  },
+  p: {
     fontFamily: "'Poppins', sans-serif",
+    fontWeight: 400,
+    fontSize: "1rem",
+    margin: "5px 0",
+    lineHeight: 1.5,
+  },
+
+  // Responsif buat HP
+  "@media (max-width: 600px)": {
+    h1: {
+      fontSize: "1.5rem",
+    },
+    h2: {
+      fontSize: "2rem",
+    },
+    p: {
+      fontSize: "0.95rem",
+    },
   },
 };
