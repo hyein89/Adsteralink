@@ -2,51 +2,52 @@ import Link from "next/link";
 
 export default function Custom404() {
   return (
-    <div style={styles.container}>
-      <h1 style={styles.code}>404</h1>
-      <p style={styles.text}>Page not found.</p>
-      <Link href="/" style={styles.button}>
-        Back home
-      </Link>
-    </div>
+    <main style={styles.container}>
+      <div style={styles.inner}>
+        <h1 style={styles.title}>404</h1>
+        <p style={styles.message}>Oops! The page you’re looking for doesn’t exist.</p>
+        <Link href="/" style={styles.link}>Go Back Home</Link>
+      </div>
+    </main>
   );
 }
 
 const styles = {
   container: {
-    minHeight: "100vh",
-    width: "100%",
     display: "flex",
-    flexDirection: "column" as const,
     alignItems: "center",
     justifyContent: "center",
-    background: "#0d0d0d",
-    color: "#fff",
-    fontFamily: "'Inter', sans-serif",
+    minHeight: "100vh",
+    background: "#0a0a0a",
     textAlign: "center" as const,
-    padding: "20px",
   },
-  code: {
-    fontSize: "120px",
+  inner: {
+    animation: "fadeInUp 1s ease forwards",
+    maxWidth: "600px",
+    padding: "0 20px",
+  },
+  title: {
+    fontSize: "10rem",
+    fontWeight: 800,
     margin: 0,
-    letterSpacing: "-2px",
-    animation: "fadeIn 1.2s ease-in-out",
+    lineHeight: 1,
+    color: "#ffffff",
   },
-  text: {
-    fontSize: "20px",
+  message: {
+    fontSize: "1.25rem",
     marginTop: "10px",
-    animation: "fadeIn 2s ease-in-out",
+    color: "#b0b0b0",
   },
-  button: {
-    marginTop: "30px",
-    textDecoration: "none",
-    padding: "12px 28px",
+  link: {
+    display: "inline-block",
+    marginTop: "40px",
+    padding: "14px 32px",
     background: "#ffffff",
     color: "#000000",
-    fontWeight: "bold",
+    fontWeight: 600,
     textTransform: "uppercase" as const,
+    letterSpacing: "0.5px",
+    borderRadius: "0",
     transition: "all 0.3s ease",
-    border: "none",
-    borderRadius: "0px",
   },
 };
