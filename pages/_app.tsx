@@ -11,6 +11,25 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/5988576.png" />
       </Head>
 
+      {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-CCTFYT265P"
+        strategy="afterInteractive"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-CCTFYT265P');
+          `,
+        }}
+      />
+
+      
       {/* Kode Histats Global */}
       <Script
         id="histats"
